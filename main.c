@@ -34,12 +34,14 @@ int main(void)
                 break;
             }
             case'-': {                
-                printf("Enter value of the node to remove: ");
-                gets_s(input, INPUT_SIZE);
+                // remove_head_node(&head);
+                remove_tail_node(&head);
+                // printf("Enter value of the node to remove: ");
+                // gets_s(input, INPUT_SIZE);
                 break;
             }
             case'*': {
-                print_linked_list(NULL);
+                print_linked_list(&head);
                 break;
             }
             case'/': {
