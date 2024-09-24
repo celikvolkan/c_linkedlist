@@ -5,10 +5,15 @@ typedef struct sNode{
     int value;
 }node_t;
 
-void add_node_to_end(node_t** ll_head, int val);
-void add_node_in_order(node_t** ll_head, int val);
-void remove_head_node();
-void remove_tail_node();
-void remove_node_with_index(int index);
-void remove_node_with_value(int value);
-void print_linked_list(const node_t** ll_head);
+typedef struct sLinkedList {
+    node_t* head;
+    unsigned int counter;
+}linked_list_t;
+
+void add_node_to_end(linked_list_t* pList, int val);
+void add_node_in_order(linked_list_t* pList, int val);
+void remove_head_node(linked_list_t* pList);
+void remove_tail_node(linked_list_t* pList);
+void remove_node_with_index(linked_list_t* pList, int index);
+void remove_node_with_value(linked_list_t* pList, int value);
+void print_linked_list(const linked_list_t* pList);

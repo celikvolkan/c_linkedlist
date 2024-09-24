@@ -4,9 +4,9 @@
 #include "linked_list.h"
 
 
-void add_node_to_end(node_t** pHead, int val)
+void add_node_to_end(linked_list_t* pList, int val)
 {
-    if (pHead == NULL) { // Error
+    if (pList == NULL) { // Error
         return;
     }
     node_t* new_node = malloc(sizeof(node_t));
@@ -15,11 +15,11 @@ void add_node_to_end(node_t** pHead, int val)
     }
     new_node->value = val;
     new_node->next = NULL;
-    if (*pHead == NULL) { // empty linked list
-        *pHead = new_node;        
+    if (pList->head == NULL) { // empty linked list
+        pList->head = new_node;        
         return;
     }    
-    node_t* pNode = *pHead;
+    node_t* pNode = pList->head;
     while(pNode->next != NULL) {
         pNode = pNode->next;
     }
@@ -27,9 +27,9 @@ void add_node_to_end(node_t** pHead, int val)
 }
 
 // value ascending order
-void add_node_in_order(node_t** pHead, int val)
+void add_node_in_order(linked_list_t* pList, int val)
 {
-    if (pHead == NULL) { // Error
+    if (pList == NULL) { // Error
         return;
     }
     node_t* new_node = malloc(sizeof(node_t));
@@ -38,14 +38,14 @@ void add_node_in_order(node_t** pHead, int val)
     }
     new_node->value = val;
     new_node->next = NULL;
-    if (*pHead == NULL) { // empty linked list
-        *pHead = new_node;
+    if (pList->head == NULL) { // empty linked list
+        pList->head = new_node;
         return;
     }
         
-    node_t* pNode = *pHead;
+    node_t* pNode = pList->head;
     if (new_node->value < pNode->value) { // new_node has the smallest value
-        *pHead = new_node;
+        pList->head = new_node;
         new_node->next = pNode;
         return;
     }
@@ -62,14 +62,14 @@ void add_node_in_order(node_t** pHead, int val)
     }
 }
 
-static bool check_before_remove_node(const node_t** pHead)
+static bool check_before_remove_node(const linked_list_t* pList)
 {
-    if (pHead == NULL) {
+    if (pList == NULL) {
         printf("Error! NULL input\n");
         return false;
     }
 
-    if (*pHead == NULL) {
+    if (pList->head == NULL) {
         printf("Empty Linked List!\n");
         return false;
     }
@@ -77,28 +77,28 @@ static bool check_before_remove_node(const node_t** pHead)
     return true;
 }
 
-void remove_head_node(node_t** pHead)
+void remove_head_node(linked_list_t* pList)
 {
-    if (check_before_remove_node(pHead) == false) {
+    if (check_before_remove_node(pList) == false) {
         return; 
     }
 
-    node_t* pNode = *pHead;
-    *pHead = (*pHead)->next;
+    node_t* pNode = pList->head;
+    pList->head = (pList->head)->next;
     free(pNode);
     printf("Removed head node successfully!\n");
 }
 
-void remove_tail_node(node_t** pHead)
+void remove_tail_node(linked_list_t* pList)
 {
-    if (check_before_remove_node(pHead) == false) {
+    if (check_before_remove_node(pList) == false) {
         return;
     }
     
-    node_t* pNode = *pHead;
+    node_t* pNode = pList->head;
     if (pNode->next == NULL) { // 1 element Linked List
         free(pNode);
-        *pHead = NULL;
+        pList->head = NULL;
         printf("Removed last remaining node successfully!\n");
         return;
     }
@@ -115,29 +115,46 @@ void remove_tail_node(node_t** pHead)
     printf("Removed tail node successfully!\n");
 }
 
-void remove_node_with_index(int index)
+void remove_node_with_index(linked_list_t* pList, int index)
 {
-
-}
-
-void remove_node_with_value(int value)
-{
-
-}
-
-void print_linked_list(const node_t** pHead)
-{
-    if (pHead == NULL) {
-        printf("Error in pHead!\n");
-        return;
-    }
-    
-    if (*pHead == NULL) {
-        printf("Empty Linked List!\n");
+    if (check_before_remove_node(pList) == false) {
         return;
     }
 
-    const node_t* pNode = *pHead;
+    if (index < 0) {
+        printf("Error! Negative index: %d\n", index);
+        return;
+    }
+
+    if (index == 0) {
+        remove_head_node(pList);
+        return;
+    }
+    // Here index is 1 or more
+    node_t* pNode = pList->head;
+    if (pNode->next == NULL) { // 1 element Linked List && index > 0
+        printf("Error! Wrong index for 1 element linked list. Index: %d\n", index);
+        return;
+    }
+
+        
+}
+
+void remove_node_with_value(linked_list_t* pList, int value)
+{
+    if (check_before_remove_node(pList) == false) {
+        return;
+    }
+
+}
+
+void print_linked_list(const linked_list_t* pList)
+{
+    if (check_before_remove_node(pList) == false) {
+        return;
+    }
+
+    const node_t* pNode = pList->head;
 
     while (pNode != NULL) {
         printf("%d", pNode->value);

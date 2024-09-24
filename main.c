@@ -8,15 +8,15 @@ const char menu_string[] =  "**********************  MENU  *********************
                             "'+' Add Node\n'-' Remove Node\n'*' Print the linked list\n'/' Exit from the program\n'm' See this menu\n" \
                             "********************************************************\n";
 
-void add_node(node_t** ll_head, int val) 
+void add_node(linked_list_t* pList, int val)
 {
-    // add_node_to_end(ll_head, val);
-    add_node_in_order(ll_head, val);
+    // add_node_to_end(pList, val);
+    add_node_in_order(pList, val);
 }
 
 int main(void)
 {
-    node_t* head = NULL;
+    linked_list_t linked_list = {.head = NULL, .counter = 0};
     char input[INPUT_SIZE] = { 0 };
     char ch = 0;
 
@@ -30,18 +30,18 @@ int main(void)
             case'+': {
                 printf("Enter value of the node to add: ");
                 gets_s(input, INPUT_SIZE);
-                add_node(&head, atoi(input));
+                add_node(&linked_list, atoi(input));
                 break;
             }
             case'-': {                
                 // remove_head_node(&head);
-                remove_tail_node(&head);
+                remove_tail_node(&linked_list);
                 // printf("Enter value of the node to remove: ");
                 // gets_s(input, INPUT_SIZE);
                 break;
             }
             case'*': {
-                print_linked_list(&head);
+                print_linked_list(&linked_list);
                 break;
             }
             case'/': {
